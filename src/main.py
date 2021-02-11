@@ -9,7 +9,7 @@ worksheet.write('A1', 'Link Text')
 worksheet.write('B1', 'Link url')
 worksheet.write('C1', 'TC name')
 
-quote_page = 'https://stackoverflow.com/'
+quote_page = 'https://github.com/'
 page = urllib2.urlopen(quote_page)
 soup = BeautifulSoup(page, 'lxml')
 
