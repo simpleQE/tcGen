@@ -1,2 +1,6 @@
 venv1
 src/output.xlsx
+.eggs/
+build/
+dist/
+tcgen.egg-info/
