@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import click
 import os
-# import ipdb;ipdb.set_trace();
+
 
 class ManualTestCases(object):
     """Class to generate test cases and its structure"""
@@ -174,7 +174,7 @@ class ManualTestCases(object):
                 )
             if i > 100000:
                 break
-		
+
         self.workbook.close()
         print("User can see generated test cases in file:", self.testcasefile)
 
