@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import click
 import os
-
+# import ipdb;ipdb.set_trace();
 
 class ManualTestCases(object):
     """Class to generate test cases and its structure"""
@@ -19,17 +19,27 @@ class ManualTestCases(object):
         self.workbook = xlsxwriter.Workbook(self.testcasefile)
         self.cell_format = self.workbook.add_format()
         self.cell_format.set_bg_color("green")
+        self.workbook.formats[0].set_font_size(16)
         self.worksheet = self.workbook.add_worksheet()
-        self.worksheet.write("A1", "Use Case Name")
-        self.worksheet.write("B1", "Test Case Name")
-        self.worksheet.write("C1", "Scenario")
-        self.worksheet.write("D1", "Use Case")
-        self.worksheet.write("E1", "Test Case Title")
-        self.worksheet.write("F1", "Test Case Description")
-        self.worksheet.write("G1", "Expected Results")
-        self.worksheet.write("H1", "Type of Test Case")
-        self.worksheet.write("I1", "Status")
-        self.worksheet.write("J1", "Comments")
+        cell_format = self.workbook.add_format({'bold': True, 'font_size': 18})
+        cell_format.set_align('center')
+        self.workbook.formats[0].set_align('vcenter')
+        self.worksheet.set_row(0, 30, cell_format)
+        self.worksheet.set_column(0, 10, 30)
+        self.worksheet.set_column(2, 2, 20)
+        self.worksheet.set_column(5, 5, 40)
+        self.worksheet.set_column(7, 8, 15)
+        self.workbook.formats[0].set_text_wrap()
+        self.worksheet.write("A1", "Use Case Name" )
+        self.worksheet.write("B1", "Test Case Name" )
+        self.worksheet.write("C1", "Scenario" )
+        self.worksheet.write("D1", "Use Case" )
+        self.worksheet.write("E1", "Test Case Title" )
+        self.worksheet.write("F1", "Test Case Description" )
+        self.worksheet.write("G1", "Expected Results" )
+        self.worksheet.write("H1", "Test Case Type" )
+        self.worksheet.write("I1", "Status" )
+        self.worksheet.write("J1", "Comments" )
 
     def _check_file(self):
         """Remove output file if exists"""
@@ -43,12 +53,17 @@ class ManualTestCases(object):
         home = urlparse(quote_page).netloc
         page = urllib2.urlopen(quote_page)
         soup = BeautifulSoup(page, "lxml")
+        untitledCount = 0
 
         # This is for anchors tag
         anchors_list = soup.find_all("a")
         # import ipdb;ipdb.set_trace()
         for i, div in enumerate(anchors_list):
             link_text = " ".join(str(div.text).split())
+            link_text = link_text.replace(' ','_')
+            if link_text=='':
+            	link_text = 'untitled'+str(untitledCount)
+            	untitledCount += 1
             link_url = div.get("href")
             if link_url is None:
                 if div.img:
@@ -79,9 +94,9 @@ class ManualTestCases(object):
             )
             self.worksheet.write("H" + str(i + 2), "Functional")
             if link_url.startswith("/"):
-                self.worksheet.write("K" + str(i + 2), quote_page + link_url)
+                self.worksheet.write_string("K" + str(i + 2), quote_page + link_url)
             else:
-                self.worksheet.write("K" + str(i + 2), link_url)
+                self.worksheet.write_string("K" + str(i + 2), link_url)
             k = i
             if i > 100000:
                 break
@@ -91,6 +106,10 @@ class ManualTestCases(object):
         for i, div in enumerate(buttons_list):
             i = i + k
             button_text = " ".join(str(div.text).split())
+            button_text = button_text.replace(' ','_')
+            if button_text=='':
+            	button_text = 'untitled'+str(++untitledCount)
+            	untitledCount += 1
             self.worksheet.write(
                 "A" + str(i + 2),
                 "UC" + str(i + 1) + "_" + button_text.lower() + "_button_click",
@@ -155,7 +174,7 @@ class ManualTestCases(object):
                 )
             if i > 100000:
                 break
-
+		
         self.workbook.close()
         print("User can see generated test cases in file:", self.testcasefile)
 
