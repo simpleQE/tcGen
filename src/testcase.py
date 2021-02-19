@@ -10,9 +10,13 @@ class ManualTestCases(object):
     """Class to generate test cases and its structure"""
 
     def __init__(self):
-        self._check_file("/tmp/output.xlsx")
 
-        self.workbook = xlsxwriter.Workbook("/tmp/output.xlsx")
+        self.config_path = os.path.expanduser("~/.config")
+        self.testcasefile = os.path.join(self.config_path, "output.xlsx")
+
+        self._check_file()
+
+        self.workbook = xlsxwriter.Workbook(self.testcasefile)
         self.cell_format = self.workbook.add_format()
         self.cell_format.set_bg_color("green")
         self.worksheet = self.workbook.add_worksheet()
@@ -27,10 +31,11 @@ class ManualTestCases(object):
         self.worksheet.write("I1", "Status")
         self.worksheet.write("J1", "Comments")
 
-    def _check_file(self, file):
+    def _check_file(self):
         """Remove output file if exists"""
-        if os.path.isfile(file):
-            os.remove(file)
+
+        if os.path.isfile(self.testcasefile):
+            os.remove(self.testcasefile)
 
     def test_case_generator(self, url):
         """generates tests"""
@@ -152,6 +157,7 @@ class ManualTestCases(object):
                 break
 
         self.workbook.close()
+        print("User can see generated test cases in file:", self.testcasefile)
 
 
 @click.command(help="Provide url")
