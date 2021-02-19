@@ -63,7 +63,7 @@ class ManualTestCases(object):
             link_text = link_text.replace(' ','_')
             if link_text=='':
             	link_text = 'untitled'+str(untitledCount)
-            	untitledCount += 1
+            	untitledCount+=1
             link_url = div.get("href")
             if link_url is None:
                 if div.img:
@@ -109,7 +109,7 @@ class ManualTestCases(object):
             button_text = button_text.replace(' ','_')
             if button_text=='':
             	button_text = 'untitled'+str(++untitledCount)
-            	untitledCount += 1
+            	untitledCount+=1
             self.worksheet.write(
                 "A" + str(i + 2),
                 "UC" + str(i + 1) + "_" + button_text.lower() + "_button_click",
