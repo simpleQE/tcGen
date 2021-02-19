@@ -58,4 +58,4 @@ Options:
 tcgen generate -u <url>
 ``` 
 
-**NOTE: User will find test cases sheet in file - /tmp/output.xlsx**
+**NOTE: User will find test cases sheet in file -/output.xlsx**
