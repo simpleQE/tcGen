@@ -11,7 +11,7 @@ class ManualTestCases(object):
 
     def __init__(self):
 
-        self.config_path = os.path.expanduser("~/.config")
+        self.config_path = os.path.expanduser("~")
         self.testcasefile = os.path.join(self.config_path, "output.xlsx")
 
         self._check_file()
