@@ -17,6 +17,8 @@ class ManualTestCases(object):
         self._check_file()
 
         self.workbook = xlsxwriter.Workbook(self.testcasefile)
+        self.workbook.window_width = 1920
+        self.workbook.window_height = 720
         self.cell_format = self.workbook.add_format()
         self.cell_format.set_bg_color("green")
         self.workbook.formats[0].set_font_size(16)
@@ -53,6 +55,7 @@ class ManualTestCases(object):
         home = urlparse(quote_page).netloc
         page = urllib2.urlopen(quote_page)
         soup = BeautifulSoup(page, "lxml")
+        soup = soup.find('body')
         untitledCount = 0
 
         # This is for anchors tag
@@ -60,19 +63,20 @@ class ManualTestCases(object):
         # import ipdb;ipdb.set_trace()
         for i, div in enumerate(anchors_list):
             link_text = " ".join(str(div.text).split())
-            link_text = link_text.replace(" ", "_")
+            case_name = link_text.replace(" ", "_")
             if link_text == "":
                 link_text = "untitled" + str(untitledCount)
+                case_name = link_text
                 untitledCount += 1
             link_url = div.get("href")
             if link_url is None:
                 if div.img:
                     link_url = div.img["src"]
             self.worksheet.write(
-                "A" + str(i + 2), "UC" + str(i + 1) + "_" + link_text.lower() + "_click"
+                "A" + str(i + 2), "UC" + str(i + 1) + "_" + case_name.lower() + "_click"
             )
             self.worksheet.write(
-                "B" + str(i + 2), "TC" + str(i + 1) + "_" + link_text.lower() + "_click"
+                "B" + str(i + 2), "TC" + str(i + 1) + "_" + case_name.lower() + "_click"
             )
             self.worksheet.write("C" + str(i + 2), link_text)
             self.worksheet.write("D" + str(i + 2), "Validating " + link_text + " link")
@@ -106,17 +110,18 @@ class ManualTestCases(object):
         for i, div in enumerate(buttons_list):
             i = i + k
             button_text = " ".join(str(div.text).split())
-            button_text = button_text.replace(" ", "_")
+            case_name = button_text.replace(" ", "_")
             if button_text == "":
                 button_text = "untitled" + str(++untitledCount)
+                case_name = button_text
                 untitledCount += 1
             self.worksheet.write(
                 "A" + str(i + 2),
-                "UC" + str(i + 1) + "_" + button_text.lower() + "_button_click",
+                "UC" + str(i + 1) + "_" + case_name.lower() + "_button_click",
             )
             self.worksheet.write(
                 "B" + str(i + 2),
-                "TC" + str(i + 1) + "_" + button_text.lower() + "_button_click",
+                "TC" + str(i + 1) + "_" + case_name.lower() + "_button_click",
             )
             self.worksheet.write("C" + str(i + 2), button_text)
             self.worksheet.write(
