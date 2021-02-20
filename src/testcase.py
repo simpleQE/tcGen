@@ -20,10 +20,9 @@ class ManualTestCases(object):
         self.workbook.window_width = 1920
         self.workbook.window_height = 720
         self.cell_format = self.workbook.add_format()
-        self.cell_format.set_bg_color("green")
         self.workbook.formats[0].set_font_size(16)
         self.worksheet = self.workbook.add_worksheet()
-        cell_format = self.workbook.add_format({"bold": True, "font_size": 18})
+        cell_format = self.workbook.add_format({"bold": True, "font_size": 18, "bg_color": "cyan", "border": 1})
         cell_format.set_align("center")
         self.workbook.formats[0].set_align("vcenter")
         self.worksheet.set_row(0, 30, cell_format)
@@ -60,7 +59,6 @@ class ManualTestCases(object):
 
         # This is for anchors tag
         anchors_list = soup.find_all("a")
-        # import ipdb;ipdb.set_trace()
         for i, div in enumerate(anchors_list):
             link_text = " ".join(str(div.text).split())
             case_name = link_text.replace(" ", "_")
@@ -104,7 +102,7 @@ class ManualTestCases(object):
             k = i
             if i > 100000:
                 break
-        # import ipdb;ipdb.set_trace()
+
         # This is for button tag
         buttons_list = soup.find_all("button")
         for i, div in enumerate(buttons_list):
