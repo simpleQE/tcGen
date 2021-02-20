@@ -113,7 +113,7 @@ class ManualTestCases(object):
                 self.worksheet.write_string("K" + str(i + 2), link_url)
             if i > 100000:
                 break
-        self.row_count = i+1
+        self.row_count = i + 1
 
     def parse_button_tags(self, soup, home):
         untitledCount = 0
