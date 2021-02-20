@@ -15,14 +15,16 @@ class ManualTestCases(object):
         self.testcasefile = os.path.join(self.config_path, "output.xlsx")
 
         self._check_file()
-
+        self.row_count = 0
         self.workbook = xlsxwriter.Workbook(self.testcasefile)
         self.workbook.window_width = 1920
         self.workbook.window_height = 720
         self.cell_format = self.workbook.add_format()
         self.workbook.formats[0].set_font_size(16)
         self.worksheet = self.workbook.add_worksheet()
-        cell_format = self.workbook.add_format({"bold": True, "font_size": 18, "bg_color": "cyan", "border": 1})
+        cell_format = self.workbook.add_format(
+            {"bold": True, "font_size": 18, "bg_color": "cyan", "border": 1}
+        )
         cell_format.set_align("center")
         self.workbook.formats[0].set_align("vcenter")
         self.worksheet.set_row(0, 30, cell_format)
@@ -54,19 +56,29 @@ class ManualTestCases(object):
         home = urlparse(quote_page).netloc
         page = urllib2.urlopen(quote_page)
         soup = BeautifulSoup(page, "lxml")
-        soup = soup.find('body')
-        untitledCount = 0
+        soup = soup.find("body")
+        self.parse_anchor_tags(soup, home)
+        self.parse_button_tags(soup, home)
+        self.workbook.close()
+        print("User can see generated test cases in file:", self.testcasefile)
 
-        # This is for anchors tag
+    def parse_anchor_tags(self, soup, home):
+        untitledCount = 0
         anchors_list = soup.find_all("a")
+        skipCount = 0
         for i, div in enumerate(anchors_list):
+            i = i + self.row_count
             link_text = " ".join(str(div.text).split())
+            link_url = div.get("href")
+            if link_url.startswith("#"):
+                skipCount += 1
+                continue
+            i -= skipCount
             case_name = link_text.replace(" ", "_")
             if link_text == "":
                 link_text = "untitled" + str(untitledCount)
                 case_name = link_text
                 untitledCount += 1
-            link_url = div.get("href")
             if link_url is None:
                 if div.img:
                     link_url = div.img["src"]
@@ -99,14 +111,15 @@ class ManualTestCases(object):
                 self.worksheet.write_string("K" + str(i + 2), quote_page + link_url)
             else:
                 self.worksheet.write_string("K" + str(i + 2), link_url)
-            k = i
             if i > 100000:
                 break
+        self.row_count = i+1
 
-        # This is for button tag
+    def parse_button_tags(self, soup, home):
+        untitledCount = 0
         buttons_list = soup.find_all("button")
         for i, div in enumerate(buttons_list):
-            i = i + k
+            i = i + self.row_count
             button_text = " ".join(str(div.text).split())
             case_name = button_text.replace(" ", "_")
             if button_text == "":
@@ -177,9 +190,7 @@ class ManualTestCases(object):
                 )
             if i > 100000:
                 break
-
-        self.workbook.close()
-        print("User can see generated test cases in file:", self.testcasefile)
+        self.row_count = i
 
 
 @click.command(help="Provide url")
