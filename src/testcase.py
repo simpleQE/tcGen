@@ -256,7 +256,7 @@ class ManualTestCases(object):
 
     def parse_input_tags(self, soup, home):
 
-        untitledCount = 0
+        untitled_count = 0
         input_boxes_list = soup.find_all("input")
         for i, div in enumerate(input_boxes_list):
             if div.get("type") == "hidden":
@@ -271,9 +271,10 @@ class ManualTestCases(object):
                 or div.get("aria-labelledby")
             )
             if input_box_name is None:
-                input_box_name = "untitled" + str(untitledCount)
-                untitledCount += 1
+                input_box_name = "untitled" + str(untitled_count)
+                untitled_count += 1
             case_name = input_box_name.replace(" ", "_")
+            # Writing in Output Sheet...
             self.worksheet.write(
                 "A" + str(self.row_count),
                 "UC"
