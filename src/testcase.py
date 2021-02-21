@@ -67,7 +67,7 @@ class ManualTestCases(object):
 
     def parse_anchor_tags(self, soup, home):
 
-        untitledcount = 0
+        untitled_count = 0
         anchors_list = soup.find_all("a")
         for i, div in enumerate(anchors_list):
             self.row_count += 1
@@ -99,8 +99,8 @@ class ManualTestCases(object):
                             path = link_url
                         link_text = " ".join(re.findall(r"\w+", path))
                     if link_text is None:
-                        link_text = "untitled" + str(untitledCount)
-                        untitledCount += 1
+                        link_text = "untitled" + str(untitled_count)
+                        untitled_count += 1
                 case_name = link_text
             case_name = link_text.replace(" ", "_")
             # Writing in Output Sheet...
