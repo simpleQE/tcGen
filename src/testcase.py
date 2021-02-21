@@ -59,9 +59,9 @@ class ManualTestCases(object):
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "lxml")
         soup = soup.find("body")
-        self.parse_anchor_tags(soup, home)
+        # self.parse_anchor_tags(soup, home)
         self.parse_button_tags(soup, home)
-        self.parse_input_tags(soup, home)
+        # self.parse_input_tags(soup, home)
         self.workbook.close()
         print("User can see generated test cases in file:", self.testcasefile)
 
@@ -131,8 +131,7 @@ class ManualTestCases(object):
                 "F" + str(self.row_count),
                 "Objective: To Validate opening of "
                 + link_text
-                + " link. \n\
-                    Pre-requisite - User should have \
+                + " link. \nPre-requisite - User should have \
                         desired access to the "
                 + home
                 + " . \nTest steps: \n1. Go to "
@@ -151,7 +150,7 @@ class ManualTestCases(object):
                 break
 
     def parse_button_tags(self, soup, home):
-        untitledCount = 0
+        untitled_count = 0
         buttons_list = soup.find_all("button")
         for i, div in enumerate(buttons_list):
             self.row_count += 1
@@ -160,11 +159,20 @@ class ManualTestCases(object):
                     "".join(ch for ch in div.text if ch.isalnum() or ch == " ")
                 ).split()
             )
-            case_name = button_text.replace(" ", "_")
             if button_text == "":
-                button_text = "untitled" + str(untitledCount)
-                case_name = button_text
-                untitledCount += 1
+                button_text = (
+                    div.get("text")
+                    or div.get("name")
+                    or div.get("id")
+                    or div.get("title")
+                    or div.get("aria-label")
+                    or div.get("aria-labelledby")
+                )
+                if button_text is None:
+                    button_text = "untitled" + str(untitled_count)
+                    case_name = button_text
+                    untitled_count += 1
+            case_name = button_text.replace(" ", "_")
             # Writing in Output Sheet...
             self.worksheet.write(
                 "A" + str(self.row_count),
@@ -295,8 +303,8 @@ class ManualTestCases(object):
                 "F" + str(self.row_count),
                 "Objective: To Validate "
                 + input_box_name
-                + " input box. \n\
-                    Pre-requisite - User should have desired access to the "
+                + " input box. \nPre-requisite - \
+                    User should have desired access to the "
                 + home
                 + " . \nTest steps: \n1. Go to "
                 + home
