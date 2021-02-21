@@ -2,9 +2,9 @@
 <h3 align="center">Test Case Generation Tool</h3>
 
 <p align="center">
-<a href="https://pypi.org/project/miqsel"><img alt="Python Versions"
+<a href="https://pypi.org/project/tcgen"><img alt="Python Versions"
 src="https://img.shields.io/pypi/pyversions/miqsel.svg?style=flat"></a>
-<a href="https://github.com/digitronik/miqsel/blob/master/LICENSE"><img alt="License: GPLV3"
+<a href="https://github.com/SurajJadhav7/tcGen/blob/master/LICENSE"><img alt="License: GPLV3"
 src="https://img.shields.io/pypi/l/miqsel.svg?version=latest"></a>
 <a href="https://pypi.org/project/black"><img alt="Code style: black"
 src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
@@ -29,7 +29,7 @@ python setup.py install
 ## Usage:
 
 ```shell
->>> tcgen 
+>>> tcgen
 Usage: tcgen [OPTIONS] COMMAND [ARGS]...
 
   Test case generator tool
@@ -40,7 +40,7 @@ Options:
 
 Commands:
   generate  Provide url
-  
+
 >>> tcgen generate --help
 Usage: tcgen generate [OPTIONS]
 
@@ -48,7 +48,7 @@ Usage: tcgen generate [OPTIONS]
 
 Options:
   -u, --url TEXT  URL to generate test cases
-  --help          Show this message and exit. 
+  --help          Show this message and exit.
 
 ```
 
@@ -56,6 +56,6 @@ Options:
 
 ```bash
 tcgen generate -u <url>
-``` 
+```
 
 **NOTE: User will find test cases sheet in file -/output.xlsx**
