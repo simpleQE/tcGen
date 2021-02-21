@@ -1,0 +1,39 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v3.2.0
+  hooks:
+  - id: trailing-whitespace
+    name: Trim Trailing Whitespace
+    language_version: python3
+  - id: end-of-file-fixer
+    name: File Ending
+    language_version: python3
+  - id: debug-statements
+    name: Debug Statments
+    language_version: python3
+  - id: check-yaml
+- repo: https://gitlab.com/pycqa/flake8
+  rev: 3.8.4
+  hooks:
+  - id: flake8
+    language_version: python3
+- repo: https://github.com/asottile/reorder_python_imports
+  rev: v2.3.5
+  hooks:
+  - id: reorder-python-imports
+    name: Reorder Python Imports
+    language_version: python3
+- repo: https://github.com/psf/black
+  rev: 20.8b1
+  hooks:
+  - id: black
+    name: Formate with Black
+    args: [--safe, --quiet, --line-length, "100"]
+    language_version: python3
+    require_serial: true
+- repo: https://github.com/asottile/pyupgrade
+  rev: v2.7.2
+  hooks:
+  - id: pyupgrade
+    name: Python Package Checks
+    language_version: python3
