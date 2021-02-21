@@ -59,11 +59,55 @@ class ManualTestCases(object):
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "lxml")
         soup = soup.find("body")
-        # self.parse_anchor_tags(soup, home)
+        self.parse_anchor_tags(soup, home)
         self.parse_button_tags(soup, home)
-        # self.parse_input_tags(soup, home)
+        self.parse_input_tags(soup, home)
         self.workbook.close()
         print("User can see generated test cases in file:", self.testcasefile)
+
+    def write_anchor_test_case(self, link_text, case_name, div, home):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_click",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_click",
+        )
+        self.worksheet.write("C" + str(self.row_count), link_text)
+        self.worksheet.write(
+            "D" + str(self.row_count), "Validating " + link_text + " link"
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count), "[" + home + "][" + link_text + "]"
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate opening of "
+            + link_text
+            + " link. \nPre-requisite - User should have \
+                    desired access to the "
+            + home
+            + " . \nTest steps: \n1. Go to "
+            + home
+            + " .\n2. Click on "
+            + link_text
+            + " link.",
+        )
+        self.worksheet.write(
+            "G" + str(self.row_count),
+            "1. " + link_text + " link should open.",
+        )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
 
     def parse_anchor_tags(self, soup, home):
 
@@ -103,51 +147,88 @@ class ManualTestCases(object):
                         untitled_count += 1
                 case_name = link_text
             case_name = link_text.replace(" ", "_")
-            # Writing in Output Sheet...
-            self.worksheet.write(
-                "A" + str(self.row_count),
-                "UC"
-                + str(self.row_count - 1)
-                + "_"
-                + case_name.lower()
-                + "_click",
-            )
-            self.worksheet.write(
-                "B" + str(self.row_count),
-                "TC"
-                + str(self.row_count - 1)
-                + "_"
-                + case_name.lower()
-                + "_click",
-            )
-            self.worksheet.write("C" + str(self.row_count), link_text)
-            self.worksheet.write(
-                "D" + str(self.row_count), "Validating " + link_text + " link"
-            )
-            self.worksheet.write(
-                "E" + str(self.row_count), "[" + home + "][" + link_text + "]"
-            )
-            self.worksheet.write(
-                "F" + str(self.row_count),
-                "Objective: To Validate opening of "
-                + link_text
-                + " link. \nPre-requisite - User should have \
-                        desired access to the "
-                + home
-                + " . \nTest steps: \n1. Go to "
-                + home
-                + " .\n2. Click on "
-                + link_text
-                + " link.",
-            )
-            self.worksheet.write(
-                "G" + str(self.row_count),
-                "1. " + link_text + " link should open.",
-            )
-            self.worksheet.write("H" + str(self.row_count), "Smoke")
-            self.worksheet.write_string("K" + str(self.row_count), str(div))
+            self.write_anchor_test_case(link_text, case_name, div, home)
             if i > 100000:
                 break
+
+    def write_button_test_case(self, button_text, case_name, div, home):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_button_click",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_button_click",
+        )
+        self.worksheet.write("C" + str(self.row_count), button_text)
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + button_text + " button",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + button_text + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate clicking "
+            + button_text
+            + " button. \nPre-requisite - User should have \
+                desired access to the "
+            + home
+            + " . \nTest steps: \n1. Go to "
+            + home
+            + " .\n2. Click on "
+            + button_text
+            + " button.",
+        )
+        button_type = div.get("type")
+        button_onclick = div.get("onclick")
+        if button_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + button_text
+                + " button click should activate respective \
+                    onClick function.",
+            )
+        elif button_type is not None:
+            if button_type.lower() == "submit":
+                self.worksheet.write(
+                    "G" + str(self.row_count),
+                    "1. "
+                    + button_text
+                    + " button click should activate submit \
+                        action for respective input field.",
+                )
+            elif button_type.lower() == "reset":
+                self.worksheet.write(
+                    "G" + str(self.row_count),
+                    "1. "
+                    + button_text
+                    + " button click should reset all \
+                        input fields to default.",
+                )
+            elif button_type.lower() == "button":
+                self.worksheet.write(
+                    "G" + str(self.row_count),
+                    "1. " + button_text + " button should get clicked.",
+                )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. " + button_text + " button click should do nothing.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
 
     def parse_button_tags(self, soup, home):
         untitled_count = 0
@@ -173,89 +254,62 @@ class ManualTestCases(object):
                     case_name = button_text
                     untitled_count += 1
             case_name = button_text.replace(" ", "_")
-            # Writing in Output Sheet...
-            self.worksheet.write(
-                "A" + str(self.row_count),
-                "UC"
-                + str(self.row_count - 1)
-                + "_"
-                + case_name.lower()
-                + "_button_click",
-            )
-            self.worksheet.write(
-                "B" + str(self.row_count),
-                "TC"
-                + str(self.row_count - 1)
-                + "_"
-                + case_name.lower()
-                + "_button_click",
-            )
-            self.worksheet.write("C" + str(self.row_count), button_text)
-            self.worksheet.write(
-                "D" + str(self.row_count),
-                "Validating " + button_text + " button",
-            )
-            self.worksheet.write(
-                "E" + str(self.row_count),
-                "[" + home + "][" + button_text + "]",
-            )
-            self.worksheet.write(
-                "F" + str(self.row_count),
-                "Objective: To Validate clicking "
-                + button_text
-                + " button. \nPre-requisite - User should have \
-                    desired access to the "
-                + home
-                + " . \nTest steps: \n1. Go to "
-                + home
-                + " .\n2. Click on "
-                + button_text
-                + " button.",
-            )
-            button_type = div.get("type")
-            button_onclick = div.get("onclick")
-            if button_onclick is not None:
-                self.worksheet.write(
-                    "G" + str(self.row_count),
-                    "1. "
-                    + button_text
-                    + " button click should activate respective \
-                        onClick function.",
-                )
-            elif button_type is not None:
-                if button_type.lower() == "submit":
-                    self.worksheet.write(
-                        "G" + str(self.row_count),
-                        "1. "
-                        + button_text
-                        + " button click should activate submit \
-                            action for respective input field.",
-                    )
-                elif button_type.lower() == "reset":
-                    self.worksheet.write(
-                        "G" + str(self.row_count),
-                        "1. "
-                        + button_text
-                        + " button click should reset all \
-                            input fields to default.",
-                    )
-                elif button_type.lower() == "button":
-                    self.worksheet.write(
-                        "G" + str(self.row_count),
-                        "1. " + button_text + " button should get clicked.",
-                    )
-            else:
-                self.worksheet.write(
-                    "G" + str(self.row_count),
-                    "1. " + button_text + " button click should do nothing.",
-                )
-            self.worksheet.write("H" + str(self.row_count), "Smoke")
-            self.worksheet.write_string("K" + str(self.row_count), str(div))
+            self.write_button_test_case(button_text, case_name, div, home)
             if i > 100000:
                 break
 
-    def parse_input_tags(self, soup, home):
+    def write_input_test_case(self, input_box_name, case_name, div, home):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_input_check",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_input_check",
+        )
+        self.worksheet.write("C" + str(self.row_count), input_box_name)
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " input box",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "] [" + input_box_name + " input]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate "
+            + input_box_name
+            + " input box. \nPre-requisite - "
+            + "User should have desired access to the "
+            + home
+            + " . \nTest steps: \n1. Go to "
+            + home
+            + " .\n2. Click on "
+            + input_box_name
+            + " input box.\n3. Type relevant input "
+            + "in already clicked input box.",
+        )
+        self.worksheet.write(
+            "G" + str(self.row_count),
+            "1. "
+            + input_box_name
+            + " input box should be clickable.\n2. "
+            + input_box_name
+            + " input box should reflect typed characters.",
+        )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
 
+    def parse_input_tags(self, soup, home):
         untitled_count = 0
         input_boxes_list = soup.find_all("input")
         for i, div in enumerate(input_boxes_list):
@@ -263,67 +317,26 @@ class ManualTestCases(object):
                 continue
             self.row_count += 1
             input_box_name = (
-                div.get("aria-label")
+                div.get("value")
                 or div.get("title")
                 or div.get("placeholder")
-                or div.get("name")
                 or div.get("id")
+                or div.get("name")
+                or div.get("aria-label")
                 or div.get("aria-labelledby")
             )
             if input_box_name is None:
                 input_box_name = "untitled" + str(untitled_count)
                 untitled_count += 1
             case_name = input_box_name.replace(" ", "_")
-            # Writing in Output Sheet...
-            self.worksheet.write(
-                "A" + str(self.row_count),
-                "UC"
-                + str(self.row_count - 1)
-                + "_"
-                + case_name.lower()
-                + "_input_check",
-            )
-            self.worksheet.write(
-                "B" + str(self.row_count),
-                "TC"
-                + str(self.row_count - 1)
-                + "_"
-                + case_name.lower()
-                + "_input_check",
-            )
-            self.worksheet.write("C" + str(self.row_count), input_box_name)
-            self.worksheet.write(
-                "D" + str(self.row_count),
-                "Validating " + input_box_name + " input box",
-            )
-            self.worksheet.write(
-                "E" + str(self.row_count),
-                "[" + home + "] [" + input_box_name + " input]",
-            )
-            self.worksheet.write(
-                "F" + str(self.row_count),
-                "Objective: To Validate "
-                + input_box_name
-                + " input box. \nPre-requisite - \
-                    User should have desired access to the "
-                + home
-                + " . \nTest steps: \n1. Go to "
-                + home
-                + " .\n2. Click on "
-                + input_box_name
-                + " input box.\n\
-                    3. Type relevant input in already clicked input box.",
-            )
-            self.worksheet.write(
-                "G" + str(self.row_count),
-                "1. "
-                + input_box_name
-                + " input box should be clickable.\n2. "
-                + input_box_name
-                + " input box should reflect typed characters.",
-            )
-            self.worksheet.write("H" + str(self.row_count), "Smoke")
-            self.worksheet.write_string("K" + str(self.row_count), str(div))
+            if div.get("type") == "submit":
+                self.write_button_test_case(
+                    input_box_name, case_name, div, home
+                )
+            else:
+                self.write_input_test_case(
+                    input_box_name, case_name, div, home
+                )
             if i > 100000:
                 break
 
