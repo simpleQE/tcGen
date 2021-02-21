@@ -69,7 +69,9 @@ class ManualTestCases(object):
         anchors_list = soup.find_all("a")
         for i, div in enumerate(anchors_list):
             self.row_count += 1
-            link_text = " ".join(str(div.text).split())
+            link_text = " ".join(
+                ("".join(ch for ch in div.text if ch.isalnum() or ch == " ")).split()
+            )
             link_url = div.get("href")
             if link_url is None:
                 if div.img is None:
@@ -127,10 +129,12 @@ class ManualTestCases(object):
         buttons_list = soup.find_all("button")
         for i, div in enumerate(buttons_list):
             self.row_count += 1
-            button_text = " ".join(str(div.text).split())
+            button_text = " ".join(
+                ("".join(ch for ch in div.text if ch.isalnum() or ch == " ")).split()
+            )
             case_name = button_text.replace(" ", "_")
             if button_text == "":
-                button_text = "untitled" + str(++untitledCount)
+                button_text = "untitled" + str(untitledCount)
                 case_name = button_text
                 untitledCount += 1
             self.worksheet.write(
@@ -210,9 +214,6 @@ class ManualTestCases(object):
     def parse_input_tags(self, soup, home):
         untitledCount = 0
         input_boxes_list = soup.find_all("input")
-        import ipdb
-
-        ipdb.set_trace()
         for i, div in enumerate(input_boxes_list):
             self.row_count += 1
             input_box_name = (
