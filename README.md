@@ -4,7 +4,7 @@
 <p align="center">
 <a href="https://pypi.org/project/tcgen"><img alt="Python Versions"
 src="https://img.shields.io/pypi/pyversions/miqsel.svg?style=flat"></a>
-<a href="https://github.com/SurajJadhav7/tcGen/blob/master/LICENSE"><img alt="License: GPLV3"
+<a href="https://github.com/simpleQE/tcGen/blob/master/LICENSE"><img alt="License: GPLV3"
 src="https://img.shields.io/pypi/l/miqsel.svg?version=latest"></a>
 <a href="https://pypi.org/project/black"><img alt="Code style: black"
 src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
@@ -17,7 +17,7 @@ Simple command line tool to generate manual test cases.
 
 1. Clone the project repository
 ```bash
-git clone https://github.com/SurajJadhav7/tcGen.git
+git clone https://github.com/simpleQE/tcGen.git
 ```
 2. Install project using below command
 
