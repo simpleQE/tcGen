@@ -15,7 +15,7 @@ class ManualTestCases(object):
         self.testcasefile = os.path.join(self.config_path, "output.xlsx")
 
         self._check_file()
-        self.row_count = 0
+        self.row_count = 1
         self.workbook = xlsxwriter.Workbook(self.testcasefile)
         self.workbook.window_width = 1920
         self.workbook.window_height = 720
@@ -67,10 +67,11 @@ class ManualTestCases(object):
     def parse_anchor_tags(self, soup, home):
         untitledCount = 0
         anchors_list = soup.find_all("a")
-        skipCount = 0
         for i, div in enumerate(anchors_list):
-            i = i + self.row_count
-            link_text = " ".join(str(div.text).split())
+            self.row_count += 1
+            link_text = " ".join(
+                ("".join(ch for ch in div.text if ch.isalnum() or ch == " ")).split()
+            )
             link_url = div.get("href")
             if link_url is None:
                 if div.img is None:
@@ -79,26 +80,29 @@ class ManualTestCases(object):
                     link_url = div.img["src"]
                 else:
                     link_url = "unavailable"
-            if link_url.startswith("#"):
-                skipCount += 1
-                continue
-            i -= skipCount
             case_name = link_text.replace(" ", "_")
             if link_text == "":
                 link_text = "untitled" + str(untitledCount)
                 case_name = link_text
                 untitledCount += 1
+            # Writing in Output Sheet...
             self.worksheet.write(
-                "A" + str(i + 2), "UC" + str(i + 1) + "_" + case_name.lower() + "_click"
+                "A" + str(self.row_count),
+                "UC" + str(self.row_count - 1) + "_" + case_name.lower() + "_click",
             )
             self.worksheet.write(
-                "B" + str(i + 2), "TC" + str(i + 1) + "_" + case_name.lower() + "_click"
+                "B" + str(self.row_count),
+                "TC" + str(self.row_count - 1) + "_" + case_name.lower() + "_click",
             )
-            self.worksheet.write("C" + str(i + 2), link_text)
-            self.worksheet.write("D" + str(i + 2), "Validating " + link_text + " link")
-            self.worksheet.write("E" + str(i + 2), "[" + home + "][" + link_text + "]")
+            self.worksheet.write("C" + str(self.row_count), link_text)
             self.worksheet.write(
-                "F" + str(i + 2),
+                "D" + str(self.row_count), "Validating " + link_text + " link"
+            )
+            self.worksheet.write(
+                "E" + str(self.row_count), "[" + home + "][" + link_text + "]"
+            )
+            self.worksheet.write(
+                "F" + str(self.row_count),
                 "Objective: To Validate opening of "
                 + link_text
                 + " link. \nPre-requisite - User should have desired access to the "
@@ -110,46 +114,54 @@ class ManualTestCases(object):
                 + " link.",
             )
             self.worksheet.write(
-                "G" + str(i + 2), "1. " + link_text + " link should open."
+                "G" + str(self.row_count), "1. " + link_text + " link should open."
             )
-            self.worksheet.write("H" + str(i + 2), "Smoke")
+            self.worksheet.write("H" + str(self.row_count), "Smoke")
             if link_url.startswith("/"):
-                self.worksheet.write_string("K" + str(i + 2), home + link_url)
+                self.worksheet.write_string("K" + str(self.row_count), home + link_url)
             else:
-                self.worksheet.write_string("K" + str(i + 2), link_url)
+                self.worksheet.write_string("K" + str(self.row_count), link_url)
             if i > 100000:
                 break
-        self.row_count = i + 1
 
     def parse_button_tags(self, soup, home):
         untitledCount = 0
         buttons_list = soup.find_all("button")
-        t = 0
         for i, div in enumerate(buttons_list):
-            i = i + self.row_count
-            button_text = " ".join(str(div.text).split())
+            self.row_count += 1
+            button_text = " ".join(
+                ("".join(ch for ch in div.text if ch.isalnum() or ch == " ")).split()
+            )
             case_name = button_text.replace(" ", "_")
             if button_text == "":
-                button_text = "untitled" + str(++untitledCount)
+                button_text = "untitled" + str(untitledCount)
                 case_name = button_text
                 untitledCount += 1
             self.worksheet.write(
-                "A" + str(i + 2),
-                "UC" + str(i + 1) + "_" + case_name.lower() + "_button_click",
+                "A" + str(self.row_count),
+                "UC"
+                + str(self.row_count - 1)
+                + "_"
+                + case_name.lower()
+                + "_button_click",
             )
             self.worksheet.write(
-                "B" + str(i + 2),
-                "TC" + str(i + 1) + "_" + case_name.lower() + "_button_click",
+                "B" + str(self.row_count),
+                "TC"
+                + str(self.row_count - 1)
+                + "_"
+                + case_name.lower()
+                + "_button_click",
             )
-            self.worksheet.write("C" + str(i + 2), button_text)
+            self.worksheet.write("C" + str(self.row_count), button_text)
             self.worksheet.write(
-                "D" + str(i + 2), "Validating " + button_text + " button"
+                "D" + str(self.row_count), "Validating " + button_text + " button"
             )
             self.worksheet.write(
-                "E" + str(i + 2), "[" + home + "][" + button_text + "]"
+                "E" + str(self.row_count), "[" + home + "][" + button_text + "]"
             )
             self.worksheet.write(
-                "F" + str(i + 2),
+                "F" + str(self.row_count),
                 "Objective: To Validate clicking "
                 + button_text
                 + " button. \nPre-requisite - User should have desired access to the "
@@ -164,7 +176,7 @@ class ManualTestCases(object):
             button_onclick = div.get("onclick")
             if button_onclick is not None:
                 self.worksheet.write(
-                    "G" + str(i + 2),
+                    "G" + str(self.row_count),
                     "1. "
                     + button_text
                     + " button click should activate respective onClick function.",
@@ -172,48 +184,45 @@ class ManualTestCases(object):
             elif button_type is not None:
                 if button_type.lower() == "submit":
                     self.worksheet.write(
-                        "G" + str(i + 2),
+                        "G" + str(self.row_count),
                         "1. "
                         + button_text
                         + " button click should activate submit action for respective input field.",
                     )
                 elif button_type.lower() == "reset":
                     self.worksheet.write(
-                        "G" + str(i + 2),
+                        "G" + str(self.row_count),
                         "1. "
                         + button_text
                         + " button click should reset all input fields to default.",
                     )
                 elif button_type.lower() == "button":
                     self.worksheet.write(
-                        "G" + str(i + 2),
+                        "G" + str(self.row_count),
                         "1. " + button_text + " button should get clicked.",
                     )
             else:
                 self.worksheet.write(
-                    "G" + str(i + 2),
+                    "G" + str(self.row_count),
                     "1. " + button_text + " button click should do nothing.",
                 )
-            self.worksheet.write("H" + str(i + 2), "Smoke")
-            self.worksheet.write_string("K" + str(i + 2), str(div))
-            t = i
+            self.worksheet.write("H" + str(self.row_count), "Smoke")
+            self.worksheet.write_string("K" + str(self.row_count), str(div))
             if i > 100000:
                 break
-        self.row_count = t + 1
 
     def parse_input_tags(self, soup, home):
         untitledCount = 0
         input_boxes_list = soup.find_all("input")
-        skipCount = 0
-        t = 0
         for i, div in enumerate(input_boxes_list):
-            i = i + self.row_count
+            self.row_count += 1
             input_box_name = (
                 div.get("aria-label")
                 or div.get("title")
                 or div.get("placeholder")
                 or div.get("name")
                 or div.get("id")
+                or div.get("aria-labelledby")
             )
             if input_box_name is None:
                 input_box_name = "untitled" + str(untitledCount)
@@ -221,22 +230,31 @@ class ManualTestCases(object):
                 untitledCount += 1
             case_name = input_box_name.replace(" ", "_")
             self.worksheet.write(
-                "A" + str(i + 2),
-                "UC" + str(i + 1) + "_" + case_name.lower() + "_input_check",
+                "A" + str(self.row_count),
+                "UC"
+                + str(self.row_count - 1)
+                + "_"
+                + case_name.lower()
+                + "_input_check",
             )
             self.worksheet.write(
-                "B" + str(i + 2),
-                "TC" + str(i + 1) + "_" + case_name.lower() + "_input_check",
+                "B" + str(self.row_count),
+                "TC"
+                + str(self.row_count - 1)
+                + "_"
+                + case_name.lower()
+                + "_input_check",
             )
-            self.worksheet.write("C" + str(i + 2), input_box_name)
+            self.worksheet.write("C" + str(self.row_count), input_box_name)
             self.worksheet.write(
-                "D" + str(i + 2), "Validating " + input_box_name + " input box"
+                "D" + str(self.row_count), "Validating " + input_box_name + " input box"
             )
             self.worksheet.write(
-                "E" + str(i + 2), "[" + home + "] [" + input_box_name + " input]"
+                "E" + str(self.row_count),
+                "[" + home + "] [" + input_box_name + " input]",
             )
             self.worksheet.write(
-                "F" + str(i + 2),
+                "F" + str(self.row_count),
                 "Objective: To Validate "
                 + input_box_name
                 + " input box. \nPre-requisite - User should have desired access to the "
@@ -248,19 +266,17 @@ class ManualTestCases(object):
                 + " input box.\n3. Type relevant input in already clicked input box.",
             )
             self.worksheet.write(
-                "G" + str(i + 2),
+                "G" + str(self.row_count),
                 "1. "
                 + input_box_name
                 + " input box should be clickable.\n2. "
                 + input_box_name
                 + " input box should reflect typed characters.",
             )
-            self.worksheet.write("H" + str(i + 2), "Smoke")
-            self.worksheet.write_string("K" + str(i + 2), str(div))
+            self.worksheet.write("H" + str(self.row_count), "Smoke")
+            self.worksheet.write_string("K" + str(self.row_count), str(div))
             if i > 100000:
                 break
-            t = i
-        self.row_count = t + 1
 
 
 @click.command(help="Provide url")
