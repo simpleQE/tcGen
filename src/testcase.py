@@ -1,4 +1,5 @@
 import os
+import re
 import urllib.request as urllib2
 from urllib.parse import urlparse
 
@@ -49,7 +50,6 @@ class ManualTestCases(object):
 
     def _check_file(self):
         """Remove output file if exists"""
-
         if os.path.isfile(self.testcasefile):
             os.remove(self.testcasefile)
 
@@ -77,18 +77,32 @@ class ManualTestCases(object):
                 ).split()
             )
             link_url = div.get("href")
-            if link_url is None:
-                if div.img is None:
-                    link_url = "unavailable"
-                elif div.img.has_attr("src"):
-                    link_url = div.img["src"]
-                else:
-                    link_url = "unavailable"
-            case_name = link_text.replace(" ", "_")
-            if link_text == "":
-                link_text = "untitled" + str(untitledcount)
+            if link_url is None or link_url.startswith("#"):
+                self.row_count -= 1
+                continue
+            elif link_url == "/":
+                link_text = "home"
+            elif link_text == "":
+                link_text = (
+                    div.get("text")
+                    or div.get("aria-label")
+                    or div.get("id")
+                    or div.get("aria-labelledby")
+                )
+                if link_text is None:
+                    if div.img is not None:
+                        link_text = div.img.get("alt")
+                    else:
+                        if link_url.startswith("http"):
+                            path = urlparse(link_url).path
+                        else:
+                            path = link_url
+                        link_text = " ".join(re.findall(r"\w+", path))
+                    if link_text is None:
+                        link_text = "untitled" + str(untitledCount)
+                        untitledCount += 1
                 case_name = link_text
-                untitledcount += 1
+            case_name = link_text.replace(" ", "_")
             # Writing in Output Sheet...
             self.worksheet.write(
                 "A" + str(self.row_count),
@@ -117,8 +131,9 @@ class ManualTestCases(object):
                 "F" + str(self.row_count),
                 "Objective: To Validate opening of "
                 + link_text
-                + " link. \nPre-requisite - "
-                "User should have desired access to the "
+                + " link. \n\
+                    Pre-requisite - User should have \
+                        desired access to the "
                 + home
                 + " . \nTest steps: \n1. Go to "
                 + home
@@ -131,14 +146,7 @@ class ManualTestCases(object):
                 "1. " + link_text + " link should open.",
             )
             self.worksheet.write("H" + str(self.row_count), "Smoke")
-            if link_url.startswith("/"):
-                self.worksheet.write_string(
-                    "K" + str(self.row_count), home + link_url
-                )
-            else:
-                self.worksheet.write_string(
-                    "K" + str(self.row_count), link_url
-                )
+            self.worksheet.write_string("K" + str(self.row_count), str(div))
             if i > 100000:
                 break
 
@@ -157,6 +165,7 @@ class ManualTestCases(object):
                 button_text = "untitled" + str(untitledCount)
                 case_name = button_text
                 untitledCount += 1
+            # Writing in Output Sheet...
             self.worksheet.write(
                 "A" + str(self.row_count),
                 "UC"
@@ -186,8 +195,8 @@ class ManualTestCases(object):
                 "F" + str(self.row_count),
                 "Objective: To Validate clicking "
                 + button_text
-                + " button. \nPre-requisite - "
-                "User should have desired access to the "
+                + " button. \nPre-requisite - User should have \
+                    desired access to the "
                 + home
                 + " . \nTest steps: \n1. Go to "
                 + home
@@ -200,8 +209,10 @@ class ManualTestCases(object):
             if button_onclick is not None:
                 self.worksheet.write(
                     "G" + str(self.row_count),
-                    "1. " + button_text + " button click should activate "
-                    "respective onClick function.",
+                    "1. "
+                    + button_text
+                    + " button click should activate respective \
+                        onClick function.",
                 )
             elif button_type is not None:
                 if button_type.lower() == "submit":
@@ -209,14 +220,16 @@ class ManualTestCases(object):
                         "G" + str(self.row_count),
                         "1. "
                         + button_text
-                        + " button click should activate submit "
-                        "action for respective input field.",
+                        + " button click should activate submit \
+                            action for respective input field.",
                     )
                 elif button_type.lower() == "reset":
                     self.worksheet.write(
                         "G" + str(self.row_count),
-                        "1. " + button_text + " button click should reset all "
-                        "input fields to default.",
+                        "1. "
+                        + button_text
+                        + " button click should reset all \
+                            input fields to default.",
                     )
                 elif button_type.lower() == "button":
                     self.worksheet.write(
@@ -238,6 +251,8 @@ class ManualTestCases(object):
         untitledCount = 0
         input_boxes_list = soup.find_all("input")
         for i, div in enumerate(input_boxes_list):
+            if div.get("type") == "hidden":
+                continue
             self.row_count += 1
             input_box_name = (
                 div.get("aria-label")
@@ -280,15 +295,15 @@ class ManualTestCases(object):
                 "F" + str(self.row_count),
                 "Objective: To Validate "
                 + input_box_name
-                + " input box. \nPre-requisite - "
-                "User should have desired access to the "
+                + " input box. \n\
+                    Pre-requisite - User should have desired access to the "
                 + home
                 + " . \nTest steps: \n1. Go to "
                 + home
                 + " .\n2. Click on "
                 + input_box_name
-                + " input box.\n3. Type relevant input in "
-                "already clicked input box.",
+                + " input box.\n\
+                    3. Type relevant input in already clicked input box.",
             )
             self.worksheet.write(
                 "G" + str(self.row_count),
