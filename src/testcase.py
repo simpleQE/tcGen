@@ -177,19 +177,43 @@ class ManualTestCases(object):
             "E" + str(self.row_count),
             "[" + home + "][" + button_text + "]",
         )
-        self.worksheet.write(
-            "F" + str(self.row_count),
-            "Objective: To Validate clicking "
-            + button_text
-            + " button. \nPre-requisite - User should have \
-                desired access to the "
-            + home
-            + " . \nTest steps: \n1. Go to "
-            + home
-            + " .\n2. Click on "
-            + button_text
-            + " button.",
-        )
+        if div.name == "input":
+            self.worksheet.write(
+                "F" + str(self.row_count),
+                "Objective: To Validate clicking "
+                + button_text
+                + " button."
+                + "\nPre-requisite - User should have desired access to the "
+                + home
+                + "."
+                + "\nTest steps: "
+                + "\n1. Go to "
+                + home
+                + "."
+                + "\n2. Give relevant input in input box corresponding to "
+                + button_text
+                + " button."
+                + "\n3. Click on "
+                + button_text
+                + " button.",
+            )
+        else:
+            self.worksheet.write(
+                "F" + str(self.row_count),
+                "Objective: To Validate clicking "
+                + button_text
+                + " button."
+                + "\nPre-requisite - User should have desired access to the "
+                + home
+                + "."
+                + "\nTest steps: "
+                + "\n1. Go to "
+                + home
+                + "."
+                + "\n2. Click on "
+                + button_text
+                + " button.",
+            )
         button_type = div.get("type")
         button_onclick = div.get("onclick")
         if button_onclick is not None:
