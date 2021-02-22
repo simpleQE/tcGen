@@ -115,9 +115,51 @@ class ManualTestCases(object):
         anchors_list = soup.find_all("a")
         for i, div in enumerate(anchors_list):
             self.row_count += 1
+            non_alnum_chars = [
+                ":",
+                "/",
+                "?",
+                "#",
+                "[",
+                "]",
+                "@",
+                "!",
+                "$",
+                "&",
+                "'",
+                "(",
+                ")",
+                "*",
+                "+",
+                ",",
+                ";",
+                "=",
+                "-",
+                ".",
+                "_",
+                "~",
+                "<",
+                ">",
+                "#",
+                "%",
+                "{",
+                "}",
+                "|",
+                "\\",
+                "^",
+                "[",
+                "]",
+                "`",
+                '"',
+                " ",
+            ]
             link_text = " ".join(
                 (
-                    "".join(ch for ch in div.text if ch.isalnum() or ch == " ")
+                    "".join(
+                        ch
+                        for ch in div.text
+                        if ch.isalnum() or ch in non_alnum_chars
+                    )
                 ).split()
             )
             link_url = div.get("href")
