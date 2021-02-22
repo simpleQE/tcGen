@@ -1,2 +1,4 @@
 xlsxwriter
 bs4
+Click>=5.0
+lxml

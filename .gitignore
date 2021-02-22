@@ -4,3 +4,11 @@ src/output.xlsx
 build/
 dist/
 tcgen.egg-info/
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/tcGen.iml
+.idea/workspace.xml
+.venv/
+.idea/vcs.xml
+src/__pycache__/
