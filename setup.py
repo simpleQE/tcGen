@@ -14,8 +14,8 @@ install_requirements = ["Click>=5.0", "lxml", "bs4", "xlsxwriter"]
 setup_requirements = ["setuptools_scm"]
 
 setup(
-    author="Suraj",
-    author_email="jadhavsuraj777@gmail.com",
+    author="simpleQE Organization",
+    author_email="qesimple@gmail.com",
     classifiers=[
         "Natural Language :: English",
         "Programming Language :: Python :: 3.6",
@@ -37,7 +37,7 @@ setup(
     keywords="test",
     name="tcgen",
     packages=find_packages(include=["src"]),
-    url="https://github.com/SurajJadhav7/tcGen",
+    url="https://github.com/simpleQE/tcGen.git",
     license="GPLv3",
     zip_safe=False,
 )
