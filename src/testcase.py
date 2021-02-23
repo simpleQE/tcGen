@@ -555,6 +555,264 @@ class ManualTestCases(object):
         self.worksheet.write("H" + str(self.row_count), "Smoke")
         self.worksheet.write_string("K" + str(self.row_count), str(div))
 
+    def write_input_color_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_color_selection_click",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_color_selection_click",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " color selection"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " color selection",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate clicking "
+            + input_box_name
+            + " color selection input."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Click on "
+            + input_box_name
+            + " color selection.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " color selection click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " color selection should be clickable."
+                + "\n2. It should open color pallete."
+                + "\n3. User should be able to select color"
+                + " from opened color pallete.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_date_test_case(self, input_box_name, case_name, div, home):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_date_selection_click",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_date_selection_click",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " date selection"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " date selection",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate clicking "
+            + input_box_name
+            + " date selection input."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Click on "
+            + input_box_name
+            + " date selection.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " date selection click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " date selection should be clickable."
+                + "\n2. It should open date dropdown with calendar."
+                + "\n3. User should be able to select date"
+                + " from opened date dropdown.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_datetime_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_datetime_selection_click",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_datetime_selection_click",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " datetime selection"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " datetime selection",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate clicking "
+            + input_box_name
+            + " datetime selection input."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Click on "
+            + input_box_name
+            + " datetime selection.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " datetime selection click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " datetime selection should be clickable."
+                + "\n2. It should open datetime dropdown with calendar."
+                + "\n3. User should be able to select date and time"
+                + " from opened datetime dropdown.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_email_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_input_check",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_input_check",
+        )
+        self.worksheet.write("C" + str(self.row_count), input_box_name)
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " input box",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "] [" + input_box_name + " input]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate "
+            + input_box_name
+            + " input box. \nPre-requisite - "
+            + "User should have desired access to the "
+            + home
+            + " . \nTest steps: \n1. Go to "
+            + home
+            + " .\n2. Click on "
+            + input_box_name
+            + " input box.\n3. Type email id "
+            + "in already clicked input box.",
+        )
+        self.worksheet.write(
+            "G" + str(self.row_count),
+            "1. "
+            + input_box_name
+            + " input box should be clickable.\n2. "
+            + input_box_name
+            + " input box should reflect typed characters of email id.",
+        )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
     def parse_input_tags(self, soup, home):
         untitled_count = 0
         input_boxes_list = soup.find_all("input")
@@ -586,6 +844,22 @@ class ManualTestCases(object):
                 )
             elif input_type == "checkbox":
                 self.write_input_checkbox_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "color":
+                self.write_input_color_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "date":
+                self.write_input_date_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "datetime-local":
+                self.write_input_datetime_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "email":
+                self.write_input_email_test_case(
                     input_box_name, case_name, div, home
                 )
             else:
