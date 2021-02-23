@@ -219,43 +219,22 @@ class ManualTestCases(object):
             "E" + str(self.row_count),
             "[" + home + "][" + button_text + "]",
         )
-        if div.name == "input":
-            self.worksheet.write(
-                "F" + str(self.row_count),
-                "Objective: To Validate clicking "
-                + button_text
-                + " button."
-                + "\nPre-requisite - User should have desired access to the "
-                + home
-                + "."
-                + "\nTest steps: "
-                + "\n1. Go to "
-                + home
-                + "."
-                + "\n2. Give relevant input in input box corresponding to "
-                + button_text
-                + " button."
-                + "\n3. Click on "
-                + button_text
-                + " button.",
-            )
-        else:
-            self.worksheet.write(
-                "F" + str(self.row_count),
-                "Objective: To Validate clicking "
-                + button_text
-                + " button."
-                + "\nPre-requisite - User should have desired access to the "
-                + home
-                + "."
-                + "\nTest steps: "
-                + "\n1. Go to "
-                + home
-                + "."
-                + "\n2. Click on "
-                + button_text
-                + " button.",
-            )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate clicking "
+            + button_text
+            + " button."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Click on "
+            + button_text
+            + " button.",
+        )
         button_type = div.get("type")
         button_onclick = div.get("onclick")
         if button_onclick is not None:
@@ -375,6 +354,207 @@ class ManualTestCases(object):
         self.worksheet.write("H" + str(self.row_count), "Smoke")
         self.worksheet.write_string("K" + str(self.row_count), str(div))
 
+    def write_input_submit_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_button_click",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_button_click",
+        )
+        self.worksheet.write("C" + str(self.row_count), input_box_name)
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " button",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate clicking "
+            + input_box_name
+            + " button."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Give relevant input in input box corresponding to "
+            + input_box_name
+            + " button."
+            + "\n3. Click on "
+            + input_box_name
+            + " button.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " button click should activate respective \
+                    onClick function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " button click should activate submit \
+                    action for respective input field.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_button_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_button_click",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_button_click",
+        )
+        self.worksheet.write("C" + str(self.row_count), input_box_name)
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " button",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate clicking "
+            + input_box_name
+            + " button."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Do relevant action corresponding to "
+            + input_box_name
+            + " button, if any."
+            + "\n3. Click on "
+            + input_box_name
+            + " button.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " button click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " button click should activate relevant action.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_checkbox_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_checkbox_click",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_checkbox_click",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " checkbox"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " checkbox",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate clicking "
+            + input_box_name
+            + " checkbox."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Click on "
+            + input_box_name
+            + " checkbox.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " checkbox click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " checkbox should be clickable."
+                + "\n2. It should activate relevant action, if any.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
     def parse_input_tags(self, soup, home):
         untitled_count = 0
         input_boxes_list = soup.find_all("input")
@@ -395,8 +575,17 @@ class ManualTestCases(object):
                 input_box_name = "untitled" + str(untitled_count)
                 untitled_count += 1
             case_name = input_box_name.replace(" ", "_")
-            if div.get("type") == "submit":
-                self.write_button_test_case(
+            input_type = div.get("type")
+            if input_type == "submit":
+                self.write_input_submit_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "button":
+                self.write_input_button_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "checkbox":
+                self.write_input_checkbox_test_case(
                     input_box_name, case_name, div, home
                 )
             else:
