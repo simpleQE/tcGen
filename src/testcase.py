@@ -813,6 +813,325 @@ class ManualTestCases(object):
         self.worksheet.write("H" + str(self.row_count), "Smoke")
         self.worksheet.write_string("K" + str(self.row_count), str(div))
 
+    def write_input_file_test_case(self, input_box_name, case_name, div, home):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_input_file_check",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_input_file_check",
+        )
+        self.worksheet.write("C" + str(self.row_count), input_box_name)
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " file input button",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "] [" + input_box_name + " file input]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate "
+            + input_box_name
+            + "file input button."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Click on "
+            + input_box_name
+            + " input button."
+            + "\n3. Choose file to upload from file manager prompt.",
+        )
+        self.worksheet.write(
+            "G" + str(self.row_count),
+            "1. "
+            + input_box_name
+            + " file input button should be clickable."
+            + "\n2. "
+            + input_box_name
+            + " input button should open a file manager prompt to select file."
+            + "\n3. File should get uploaded and "
+            + "it should indicate file uploaded successfully or not.",
+        )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_image_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_image_input_check",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_image_input_check",
+        )
+        self.worksheet.write("C" + str(self.row_count), input_box_name)
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " input image",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "] [" + input_box_name + " image]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate "
+            + input_box_name
+            + " image button."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Click on "
+            + input_box_name
+            + " image button.",
+        )
+        self.worksheet.write(
+            "G" + str(self.row_count),
+            "1. "
+            + input_box_name
+            + " image button should be clickable."
+            + "\n2. "
+            + input_box_name
+            + " input button should activate click action"
+            + " corresponding to it.",
+        )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_month_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_month_selection_click",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_month_selection_click",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " month selection"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " month selection",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate clicking "
+            + input_box_name
+            + " month selection input."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Click on "
+            + input_box_name
+            + " month selection.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " month selection click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " month selection should be clickable."
+                + "\n2. It should open month dropdown."
+                + "\n3. User should be able to select month"
+                + " from opened month dropdown.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_number_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_number_input_check",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_number_input_check",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " number selection"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " number selection",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate clicking "
+            + input_box_name
+            + " number selection input."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Click on up/down arrow in"
+            + input_box_name
+            + " number selection and set desired number.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " number selection click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " number input should be clickable."
+                + "\n2. User should be able to select desired number"
+                + " using up/down arrows.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_password_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_password_input_check",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_password_input_check",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " password input"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " password input",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate "
+            + input_box_name
+            + " password input box. \nPre-requisite - "
+            + "User should have desired access to the "
+            + home
+            + " . \nTest steps: \n1. Go to "
+            + home
+            + " .\n2. Click on "
+            + input_box_name
+            + " password input box.\n3. Type password "
+            + "in already clicked input box.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " password selection click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " password input box should be clickable.\n2. "
+                + input_box_name
+                + " password input box should reflect "
+                + "typed characters of password."
+                + "\n 3. typed characters should be masked.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
     def parse_input_tags(self, soup, home):
         untitled_count = 0
         input_boxes_list = soup.find_all("input")
@@ -824,6 +1143,7 @@ class ManualTestCases(object):
                 div.get("value")
                 or div.get("title")
                 or div.get("placeholder")
+                or div.get("alt")
                 or div.get("id")
                 or div.get("name")
                 or div.get("aria-label")
@@ -860,6 +1180,26 @@ class ManualTestCases(object):
                 )
             elif input_type == "email":
                 self.write_input_email_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "file":
+                self.write_input_file_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "image":
+                self.write_input_image_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "month":
+                self.write_input_month_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "number":
+                self.write_input_number_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "password":
+                self.write_input_password_test_case(
                     input_box_name, case_name, div, home
                 )
             else:
