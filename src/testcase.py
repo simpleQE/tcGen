@@ -1132,6 +1132,509 @@ class ManualTestCases(object):
         self.worksheet.write("H" + str(self.row_count), "Smoke")
         self.worksheet.write_string("K" + str(self.row_count), str(div))
 
+    def write_input_radio_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_radio_input_check",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_radio_input_check",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " radio input"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " radio input",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate "
+            + input_box_name
+            + " radio input. \nPre-requisite - "
+            + "User should have desired access to the "
+            + home
+            + " . \nTest steps: \n1. Go to "
+            + home
+            + " .\n2. Click on "
+            + input_box_name
+            + " radio input.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " radio selection click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " radio input button should be clickable."
+                + "\n2. User should able to select corresponding input.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_range_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_range_input_check",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_range_input_check",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " range input"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " range input",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate "
+            + input_box_name
+            + " range input. \nPre-requisite - "
+            + "User should have desired access to the "
+            + home
+            + " . \nTest steps: \n1. Go to "
+            + home
+            + " .\n2. Click, hold and swipe "
+            + input_box_name
+            + " range input.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " range selection click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " range input button should be clickable."
+                + "\n2. User should able to select corresponding input.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_reset_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_reset_button_click",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_reset_button_click",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " reset button"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " reset button",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate "
+            + input_box_name
+            + " reset button. \nPre-requisite - "
+            + "User should have desired access to the "
+            + home
+            + " . \nTest steps: \n1. Go to "
+            + home
+            + " ."
+            + "\n2. Provide inputs in input boxes corresponding"
+            + " to reset button."
+            + "\n3. Click on "
+            + input_box_name
+            + " reset button.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " reset selection click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " reset button should be clickable."
+                + "\n2. All corresponding inputs should reset after "
+                + "clicking on reset button.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_search_test_case(
+        self, input_box_name, case_name, div, home
+    ):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_search_input_check",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_search_input_check",
+        )
+        self.worksheet.write("C" + str(self.row_count), input_box_name)
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " search input box",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "] [" + input_box_name + " search input]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate "
+            + input_box_name
+            + " search input box. \nPre-requisite - "
+            + "User should have desired access to the "
+            + home
+            + " . \nTest steps: \n1. Go to "
+            + home
+            + " .\n2. Click on "
+            + input_box_name
+            + " search input box.\n3. Type relevant input "
+            + "in already clicked search input box.",
+        )
+        self.worksheet.write(
+            "G" + str(self.row_count),
+            "1. "
+            + input_box_name
+            + " search input box should be clickable.\n2. "
+            + input_box_name
+            + " search input box should reflect typed characters of email id."
+            + "\n3. "
+            + "search input box should show suggestions dropdown.",
+        )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_tel_test_case(self, input_box_name, case_name, div, home):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_input_check",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_input_check",
+        )
+        self.worksheet.write("C" + str(self.row_count), input_box_name)
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " input box",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "] [" + input_box_name + " input]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate "
+            + input_box_name
+            + " input box. \nPre-requisite - "
+            + "User should have desired access to the "
+            + home
+            + " . \nTest steps: \n1. Go to "
+            + home
+            + " .\n2. Click on "
+            + input_box_name
+            + " input box.\n3. Type telephone number "
+            + "in already clicked input box.",
+        )
+        self.worksheet.write(
+            "G" + str(self.row_count),
+            "1. "
+            + input_box_name
+            + " input box should be clickable.\n2. "
+            + input_box_name
+            + " input box should reflect "
+            + "typed characters of telephone number.",
+        )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_time_test_case(self, input_box_name, case_name, div, home):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_time_selection_click",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_time_selection_click",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " time selection"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " time selection",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate clicking "
+            + input_box_name
+            + " time selection input."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Click on "
+            + input_box_name
+            + " time selection.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " time selection click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " time selection should be clickable."
+                + "\n2. It should open time dropdown."
+                + "\n3. User should be able to select time"
+                + " from opened time dropdown.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_url_test_case(self, input_box_name, case_name, div, home):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_url_input_check",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_url_input_check",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " url input"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " url input",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate "
+            + input_box_name
+            + " url input box. \nPre-requisite - "
+            + "User should have desired access to the "
+            + home
+            + " . \nTest steps: \n1. Go to "
+            + home
+            + " .\n2. Click on "
+            + input_box_name
+            + " url input box.\n3. Type url "
+            + "in already clicked input box.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " url selection click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " url input box should be clickable.\n2. "
+                + input_box_name
+                + " url input box should reflect "
+                + "typed characters of url."
+                + "\n 3. Invalid url input should show invalid message.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
+    def write_input_week_test_case(self, input_box_name, case_name, div, home):
+        self.worksheet.write(
+            "A" + str(self.row_count),
+            "UC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_week_selection_click",
+        )
+        self.worksheet.write(
+            "B" + str(self.row_count),
+            "TC"
+            + str(self.row_count - 1)
+            + "_"
+            + case_name.lower()
+            + "_week_selection_click",
+        )
+        self.worksheet.write(
+            "C" + str(self.row_count), input_box_name + " week selection"
+        )
+        self.worksheet.write(
+            "D" + str(self.row_count),
+            "Validating " + input_box_name + " week selection",
+        )
+        self.worksheet.write(
+            "E" + str(self.row_count),
+            "[" + home + "][" + input_box_name + "]",
+        )
+        self.worksheet.write(
+            "F" + str(self.row_count),
+            "Objective: To Validate clicking "
+            + input_box_name
+            + " week selection input."
+            + "\nPre-requisite - User should have desired access to the "
+            + home
+            + "."
+            + "\nTest steps: "
+            + "\n1. Go to "
+            + home
+            + "."
+            + "\n2. Click on "
+            + input_box_name
+            + " week selection.",
+        )
+        input_onclick = div.get("onclick")
+        if input_onclick is not None:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " week selection click should activate respective "
+                + input_onclick
+                + " function.",
+            )
+        else:
+            self.worksheet.write(
+                "G" + str(self.row_count),
+                "1. "
+                + input_box_name
+                + " week selection should be clickable."
+                + "\n2. It should open week dropdown."
+                + "\n3. User should be able to select week"
+                + " from opened week dropdown.",
+            )
+        self.worksheet.write("H" + str(self.row_count), "Smoke")
+        self.worksheet.write_string("K" + str(self.row_count), str(div))
+
     def parse_input_tags(self, soup, home):
         untitled_count = 0
         input_boxes_list = soup.find_all("input")
@@ -1200,6 +1703,38 @@ class ManualTestCases(object):
                 )
             elif input_type == "password":
                 self.write_input_password_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "radio":
+                self.write_input_radio_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "range":
+                self.write_input_range_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "reset":
+                self.write_input_reset_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "search":
+                self.write_input_search_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "tel":
+                self.write_input_tel_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "time":
+                self.write_input_time_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "url":
+                self.write_input_url_test_case(
+                    input_box_name, case_name, div, home
+                )
+            elif input_type == "week":
+                self.write_input_week_test_case(
                     input_box_name, case_name, div, home
                 )
             else:
