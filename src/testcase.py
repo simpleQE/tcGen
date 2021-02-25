@@ -24,7 +24,7 @@ class ManualTestCases(object):
         soup = soup.find("body")
         self.parse_anchor_tags(soup, home)
         self.parse_button_tags(soup, home)
-        # self.parse_input_tags(soup, home)
+        self.parse_input_tags(soup, home)
         testshe.test_case_show()
 
     def parse_anchor_tags(self, soup, home):
